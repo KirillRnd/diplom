@@ -1,21 +1,7 @@
-function [outr,outv] = randomdist_tundra_func(R,r0,V0,sdr0,sdv0,grad_0,h,iter)
+function [outr,outv] = randomdist_tundra_func(Rnorm,Rnorm_tmp,r0,V0,sdr0,sdv0,h,iter)
 %UNTITLED2 Summary of this function goes here
 %   Detailed explanation goes here
-Rnew=R(:,1:6001);%базовые файлы
 
-N = 6001;
-Rnorm_tmp=zeros(3,N);
-for i=1:N
-    Rnorm_tmp(:,i)=Rnew(:,i)/norm(Rnew(:,i));
-end
-%grad_0=1;
-SS=grad_0*2*pi/360;
-Rnorm=zeros(3,N);
-for i=1:N-1
-    Rnorm(:,i)=random_deviation(Rnorm_tmp(:,i)',cross(Rnorm_tmp(:,i),Rnorm_tmp(:,i+1)),SS);
-end
-
-    Rnorm(:,N)=random_deviation(Rnorm_tmp(:,N)',cross(Rnorm_tmp(:,N-1),Rnorm_tmp(:,N)),SS);
 %%задание начальной точки с ошибкой
 %sdr0=1e+03;
 tmpq=my_eul_to_quat(rand*2*pi, rand*2*pi, rand*2*pi, "ZXZs");
@@ -47,7 +33,7 @@ Graph=zeros(50,1);
 Graph2=zeros(50,1);
 Graph3=zeros(50,1);
 i = 0;
-while i<10
+while i<3
     r02=rfound;
     V02=Vfound;
     
